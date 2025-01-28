@@ -33,7 +33,7 @@ async def run_scrape(url, zipcode):
         try:
             page = await browser.new_page()
             
-            res = await page.goto(url, wait_until="domcontentloaded")
+            res = await page.goto(url, wait_until="load")
 
             first_content = await page.content()
 
