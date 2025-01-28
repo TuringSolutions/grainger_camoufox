@@ -23,7 +23,7 @@ async def run_scrape(url, zipcode):
         async with AsyncCamoufox(
             humanize=2.0,
             os=["windows", "linux"],
-            headless=False,
+            headless="virtual",
             geoip=True,
             proxy={
                 "server": "geo.iproyal.com:12321",
