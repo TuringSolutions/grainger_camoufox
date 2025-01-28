@@ -19,8 +19,7 @@ async def save_resources(route, request):
 
 async def run_scrape(url, zipcode):
     pid = url.split("?")[0].split("/")[-1].split("-")[-1]
-    try:
-        async with AsyncCamoufox(
+    async with AsyncCamoufox(
             humanize=2.0,
             os=["windows", "linux"],
             headless="virtual",
@@ -31,7 +30,9 @@ async def run_scrape(url, zipcode):
                 "password": "uJUnzLRMv5c5Ap0Z_country-us",
             },
         ) as browser:
+        try:
             page = await browser.new_page()
+            
             res = await page.goto(url, wait_until="domcontentloaded")
 
             first_content = await page.content()
@@ -97,9 +98,12 @@ async def run_scrape(url, zipcode):
 
             return main_page_content, shipping_content, 200
 
-    except Exception as ex:
-        traceback.print_exc()
-        await page.screenshot(path=f"htmls/{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
+        except Exception as ex:
+            traceback.print_exc()
+            await page.screenshot(path=f"htmls/{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
+
+        finally:
+            await browser.close()
 
 if __name__=="__main__":
     import asyncio
