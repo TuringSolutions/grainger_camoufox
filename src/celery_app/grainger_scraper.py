@@ -17,6 +17,32 @@ async def save_resources(route, request):
     else:
         await route.continue_()
 
+async def test_run():
+    async with AsyncCamoufox(
+            humanize=2.0,
+            headless="virtual",
+            geoip=True,
+            proxy={
+                "server": "geo.iproyal.com:12321",
+                "username": "RAD5VCH0WnT6glQG",
+                "password": "uJUnzLRMv5c5Ap0Z_country-us",
+            },
+        ) as browser:
+        try:
+            page = await browser.new_page()
+            
+            res = await page.goto("https://camoufox.com/tests/webgl", wait_until="load")
+
+            first_content = await page.content()
+
+            await page.screenshot(path=f"htmls/test-{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
+        except Exception as ex:
+            traceback.print_exc()
+            await page.screenshot(path=f"htmls/test_error-{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
+
+        finally:
+            await browser.close()
+
 async def run_scrape(url, zipcode):
     pid = url.split("?")[0].split("/")[-1].split("-")[-1]
     async with AsyncCamoufox(
