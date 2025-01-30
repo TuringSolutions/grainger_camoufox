@@ -132,4 +132,4 @@ async def run_scrape(url, zipcode):
 
 if __name__=="__main__":
     import asyncio
-    asyncio.run(run_scrape("https://www.grainger.com/product/RITTAL-Enclosure-Air-Conditioner-6YDP4", "70001"))
+    asyncio.run(test_run())
