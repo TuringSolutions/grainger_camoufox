@@ -34,8 +34,10 @@ async def test_run():
             res = await page.goto("https://camoufox.com/tests/webgl", wait_until="load")
 
             first_content = await page.content()
-
-            await page.screenshot(path=f"htmls/test-{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
+            file_name_rand = randint(0, 10000)
+            await page.screenshot(path=f"htmls/test-{file_name_rand}.jpeg", type="jpeg", full_page=True)
+            with open(f"test-{file_name_rand}.html", mode='w') as f:
+                f.write(first_content)
         except Exception as ex:
             traceback.print_exc()
             await page.screenshot(path=f"htmls/test_error-{randint(0, 10000)}.jpeg", type="jpeg", full_page=True)
